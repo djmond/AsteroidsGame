@@ -1,4 +1,5 @@
-SpaceShip trek = new SpaceShip();
+  SpaceShip trek = new SpaceShip();
+  Asteroid bomb = new Asteroid();
 Star[] dot = new Star[200];
 public void setup() 
 {
@@ -15,6 +16,7 @@ public void draw()
   for(int i=0;i<dot.length;i++){
     dot[i].show();
   }
+  bomb.show();//asteroid
 }
 public void keyPressed(){
   if(keyCode == UP)
@@ -85,6 +87,7 @@ class SpaceShip extends Floater
 }
 class Asteroid extends Floater
 {
+   private int rot;
    public void setX(int x){myCenterX=x;}  
    public int getX(){return (int)myCenterX;}   
    public void setY(int y){myCenterY=y;}   
@@ -97,25 +100,36 @@ class Asteroid extends Floater
    public double getPointDirection(){return myPointDirection;} 
    public Asteroid(){
     myColor=color(204, 204, 179);
-    corners=5;
+    corners=6;
     xCorners = new int[corners];
     yCorners = new int [corners];
 
-    xCorners[0]=-4;
-    yCorners[0]=2;
-    xCorners[1]=-1;
-    yCorners[1]=3;
-    xCorners[2]=2;
-    yCorners[2]=2;
-    xCorners[3]=4;
+    xCorners[0]=-8;
+    yCorners[0]=4;
+    xCorners[1]=-2;
+    yCorners[1]=6;
+    xCorners[2]=4;
+    yCorners[2]=4;
+    xCorners[3]=8;
     yCorners[3]=0;
-    xCorners[4]=2;
-    yCorners[4]=-2;
-    xCorners[5]=-2;
-    yCorners[5]=-2;
+    xCorners[4]=4;
+    yCorners[4]=-4;
+    xCorners[5]=-4;
+    yCorners[5]=-4;
+
+    myCenterX=500;
+    myCenterY=450; 
+    myDirectionX=0;
+    myDirectionY=0;
+    myPointDirection=0;    
+    rot=(int)(Math.random()*3)-2;
     
    }
+   public void move(){
+      super.move();
+      rotate(rot);
 
+   }
 
 }
 class Star{ 
