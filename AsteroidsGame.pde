@@ -1,12 +1,15 @@
   SpaceShip trek = new SpaceShip();
-  Asteroid bomb = new Asteroid();
-Star[] dot = new Star[200];
+  Asteroid[] bomb = new Asteroid[30];
+Star[] dot = new Star[300];
 public void setup() 
 {
-  size(600, 600);
+  size(1000, 1000);
   for(int i=0;i<dot.length;i++){
     dot[i] = new Star();
   } 
+  for(int b=0;b<bomb.length;b++){
+    bomb[b] = new Asteroid();
+  }
 }
 public void draw() 
 {
@@ -16,12 +19,15 @@ public void draw()
   for(int i=0;i<dot.length;i++){
     dot[i].show();
   }
-  bomb.show();//asteroid
+  for(int b=0;b<bomb.length;b++){
+    bomb[b].show();
+    bomb[b].move();
+  }
 }
 public void keyPressed(){
   if(keyCode == UP)
   {
-    trek.accelerate(5);
+    trek.accelerate(3);
   }
   if(keyCode == RIGHT){
     trek.rotate(5);
@@ -30,8 +36,15 @@ public void keyPressed(){
     trek.rotate(-5);
   }
   if(key == 32){
-    trek.setX((int)(Math.random()*600));
-    trek.setY((int)(Math.random()*600));
+    trek.setX((int)(Math.random()*1000));
+    trek.setY((int)(Math.random()*1000));
+  }
+  if(keyCode ==DOWN){
+    trek.accelerate(-3);
+  }
+  if (key == 's') {
+    trek.setDirectionX(0);
+    trek.setDirectionY(0);
   }
 
 }
@@ -99,30 +112,31 @@ class Asteroid extends Floater
    public void setPointDirection(int degrees){myPointDirection=degrees;}  
    public double getPointDirection(){return myPointDirection;} 
    public Asteroid(){
-    myColor=color(204, 204, 179);
+    myColor=color(112, 105, 104);
     corners=6;
     xCorners = new int[corners];
     yCorners = new int [corners];
 
-    xCorners[0]=-8;
-    yCorners[0]=4;
-    xCorners[1]=-2;
-    yCorners[1]=6;
-    xCorners[2]=4;
-    yCorners[2]=4;
-    xCorners[3]=8;
+    xCorners[0]=-16;
+    yCorners[0]=8;
+    xCorners[1]=-8;
+    yCorners[1]=12;
+    xCorners[2]=8;
+    yCorners[2]=8;
+    xCorners[3]=16;
     yCorners[3]=0;
-    xCorners[4]=4;
-    yCorners[4]=-4;
-    xCorners[5]=-4;
-    yCorners[5]=-4;
+    xCorners[4]=8;
+    yCorners[4]=-8;
+    xCorners[5]=-12;
+    yCorners[5]=-12;
 
-    myCenterX=500;
-    myCenterY=450; 
-    myDirectionX=0;
-    myDirectionY=0;
+    myCenterX=(int)(Math.random()*1000);
+    myCenterY=(int)(Math.random()*1000); 
+    myDirectionX=(int)(Math.random()*7)-3;
+    myDirectionY=(int)(Math.random()*7)-3;
     myPointDirection=0;    
-    rot=(int)(Math.random()*3)-2;
+    rot=(int)(Math.random()*3)-1;
+  
     
    }
    public void move(){
@@ -135,8 +149,8 @@ class Asteroid extends Floater
 class Star{ 
   private int mySx,mySy;
   Star(){
-    mySx=(int)(Math.random()*600);
-    mySy=(int)(Math.random()*600);
+    mySx=(int)(Math.random()*1000);
+    mySy=(int)(Math.random()*1000);
   }
   public void show(){
     fill(255);
