@@ -1,6 +1,12 @@
   SpaceShip trek = new SpaceShip();
   Asteroid[] bomb = new Asteroid[30];
 Star[] dot = new Star[300];
+boolean upIsPressed = false;
+boolean downIsPressed = false;
+boolean leftIsPressed = false;
+boolean rightIsPressed = false;
+
+
 public void setup() 
 {
   size(1000, 1000);
@@ -23,30 +29,85 @@ public void draw()
     bomb[b].show();
     bomb[b].move();
   }
+  //keys stuff
+  if(upIsPressed==true)
+  {
+    trek.accelerate(0.2);
+  }
+  if(downIsPressed==true)
+  {
+    trek.accelerate(-0.2);
+  }
+  if(leftIsPressed==true)
+  {
+    trek.rotate(-5);
+  }
+  if(rightIsPressed==true)
+  {
+    trek.rotate(5);
+  }
+  if(upIsPressed==true && rightIsPressed==true)
+  {
+    trek.accelerate(0);
+    trek.rotate(5);
+  }
+  if(upIsPressed==true && leftIsPressed==true)
+  {
+    trek.accelerate(0);
+    trek.rotate(-5);
+  }
+  if(downIsPressed==true && rightIsPressed==true)
+  {
+    trek.accelerate(0);
+    trek.rotate(5);
+  }
+  if(downIsPressed==true && leftIsPressed==true)
+  {
+    trek.accelerate(0);
+    trek.rotate(-5);
+  }
+
 }
 public void keyPressed(){
   if(keyCode == UP)
   {
-    trek.accelerate(3);
+    upIsPressed = true;
   }
   if(keyCode == RIGHT){
-    trek.rotate(5);
+    rightIsPressed = true;
   }
   if(keyCode == LEFT){
-    trek.rotate(-5);
+    leftIsPressed = true;
   }
   if(key == 32){
     trek.setX((int)(Math.random()*1000));
     trek.setY((int)(Math.random()*1000));
+    trek.setDirectionX(0);
+    trek.setDirectionY(0);
+    trek.setPointDirection((int)(Math.random()*360));
   }
   if(keyCode ==DOWN){
-    trek.accelerate(-3);
+    downIsPressed = true;
   }
   if (key == 's') {
     trek.setDirectionX(0);
     trek.setDirectionY(0);
   }
 
+}
+public void keyReleased(){
+  if(keyCode == UP){
+    upIsPressed = false;
+  }
+  if(keyCode == DOWN){
+    downIsPressed = false;
+  }
+  if(keyCode == RIGHT){
+    rightIsPressed = false;
+  }
+  if(keyCode == LEFT){
+    leftIsPressed = false;
+  }
 }
 class SpaceShip extends Floater  
 {   
