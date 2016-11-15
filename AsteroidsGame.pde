@@ -1,5 +1,6 @@
   SpaceShip trek = new SpaceShip();
-  Asteroid[] bomb = new Asteroid[30];
+  ArrayList <Asteroid>rocks = new ArrayList <Asteroid>();
+  
 Star[] dot = new Star[300];
 boolean upIsPressed = false;
 boolean downIsPressed = false;
@@ -13,10 +14,10 @@ public void setup()
   for(int i=0;i<dot.length;i++){
     dot[i] = new Star();
   } 
-  for(int b=0;b<bomb.length;b++){
-    bomb[b] = new Asteroid();
+  for(int b=0;b<50;b++){
+    rocks.add(b,new Asteroid());
   }
-}
+} 
 public void draw() 
 {
   background(0);
@@ -25,10 +26,17 @@ public void draw()
   for(int i=0;i<dot.length;i++){
     dot[i].show();
   }
-  for(int b=0;b<bomb.length;b++){
-    bomb[b].show();
-    bomb[b].move();
+  for(int b=0;b<rocks.size();b++){
+    rocks.get(b).show();
+    rocks.get(b).move();
+    if(dist(trek.getX(),trek.getY(),rocks.get(b).getX(),rocks.get(b).getY())<20)
+  {
+
+    rocks.remove(b);
+  }  
+    
   }
+  
   //keys stuff
   if(upIsPressed==true)
   {
@@ -40,31 +48,31 @@ public void draw()
   }
   if(leftIsPressed==true)
   {
-    trek.rotate(-5);
+    trek.rotate(-3);
   }
   if(rightIsPressed==true)
   {
-    trek.rotate(5);
+    trek.rotate(3);
   }
   if(upIsPressed==true && rightIsPressed==true)
   {
     trek.accelerate(0);
-    trek.rotate(5);
+    trek.rotate(3);
   }
   if(upIsPressed==true && leftIsPressed==true)
   {
     trek.accelerate(0);
-    trek.rotate(-5);
+    trek.rotate(-3);
   }
   if(downIsPressed==true && rightIsPressed==true)
   {
     trek.accelerate(0);
-    trek.rotate(5);
+    trek.rotate(3);
   }
   if(downIsPressed==true && leftIsPressed==true)
   {
     trek.accelerate(0);
-    trek.rotate(-5);
+    trek.rotate(-3);
   }
 
 }
