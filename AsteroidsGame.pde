@@ -1,5 +1,6 @@
   SpaceShip trek = new SpaceShip();
   ArrayList <Asteroid>rocks = new ArrayList <Asteroid>();
+  Bullet boom = new Bullet();
   
 Star[] dot = new Star[300];
 boolean upIsPressed = false;
@@ -29,13 +30,11 @@ public void draw()
   for(int b=0;b<rocks.size();b++){
     rocks.get(b).show();
     rocks.get(b).move();
-    if(dist(trek.getX(),trek.getY(),rocks.get(b).getX(),rocks.get(b).getY())<20)
-  {
-
+    if(dist(trek.getX(),trek.getY(),rocks.get(b).getX(),rocks.get(b).getY())<25){
     rocks.remove(b);
   }  
-    
   }
+  boom.show();//bullets
   
   //keys stuff
   if(upIsPressed==true)
@@ -214,6 +213,31 @@ class Asteroid extends Floater
 
    }
 
+}
+class Bullet extends Floater{
+  public void setX(int x){myCenterX=x;}  
+   public int getX(){return (int)myCenterX;}   
+   public void setY(int y){myCenterY=y;}   
+   public int getY(){return (int)myCenterY;}   
+   public void setDirectionX(double x){myDirectionX=x;}   
+   public double getDirectionX(){return myDirectionX;}   
+   public void setDirectionY(double y){myDirectionY=y;}   
+   public double getDirectionY(){return myDirectionY;}   
+   public void setPointDirection(int degrees){myPointDirection=degrees;}  
+   public double getPointDirection(){return myPointDirection;} 
+  public Bullet(){
+    myCenterX=300;
+    myCenterY=300; 
+    myPointDirection=0;
+    double dRadians =myPointDirection*(Math.PI/180);
+    myDirectionX=5 * Math.cos(dRadians);
+    myDirectionY=5 * Math.sin(dRadians);
+  }
+  public void show(){
+    noStroke();
+    fill(26, 255, 255);
+    ellipse((float)myCenterY,(float)myCenterY,15,15);
+  }
 }
 class Star{ 
   private int mySx,mySy;
