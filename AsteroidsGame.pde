@@ -1,7 +1,6 @@
   SpaceShip trek = new SpaceShip();
   ArrayList <Asteroid>rocks = new ArrayList <Asteroid>();
-  Bullet boom = new Bullet();
-  
+  ArrayList <Bullet>boom = new ArrayList <Bullet>();
 Star[] dot = new Star[300];
 boolean upIsPressed = false;
 boolean downIsPressed = false;
@@ -17,6 +16,7 @@ public void setup()
   } 
   for(int b=0;b<50;b++){
     rocks.add(b,new Asteroid());
+
   }
 } 
 public void draw() 
@@ -34,7 +34,11 @@ public void draw()
     rocks.remove(b);
   }  
   }
-  boom.show();//bullets
+  for(int p=0;p<boom.size();p++){
+    boom.get(p).show();
+    boom.get(p).move();
+  }
+
   
   //keys stuff
   if(upIsPressed==true)
@@ -86,7 +90,7 @@ public void keyPressed(){
   if(keyCode == LEFT){
     leftIsPressed = true;
   }
-  if(key == 32){
+  if(key == 'a'){
     trek.setX((int)(Math.random()*1000));
     trek.setY((int)(Math.random()*1000));
     trek.setDirectionX(0);
@@ -99,6 +103,9 @@ public void keyPressed(){
   if (key == 's') {
     trek.setDirectionX(0);
     trek.setDirectionY(0);
+  }
+  if(key == 32){
+    boom.add(new Bullet(trek));//buller
   }
 
 }
@@ -225,10 +232,10 @@ class Bullet extends Floater{
    public double getDirectionY(){return myDirectionY;}   
    public void setPointDirection(int degrees){myPointDirection=degrees;}  
    public double getPointDirection(){return myPointDirection;} 
-  public Bullet(){
-    myCenterX=300;
-    myCenterY=300; 
-    myPointDirection=0;
+  public Bullet(SpaceShip trek){
+    myCenterX=trek.getX();
+    myCenterY=trek.getY(); 
+    myPointDirection=trek.getPointDirection();
     double dRadians =myPointDirection*(Math.PI/180);
     myDirectionX=5 * Math.cos(dRadians);
     myDirectionY=5 * Math.sin(dRadians);
