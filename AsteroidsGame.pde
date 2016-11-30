@@ -38,6 +38,15 @@ public void draw()
     boom.get(p).show();
     boom.get(p).move();
   }
+  for(int a=0;a<boom.size();a++){
+    for(int c=0;c<rocks.size();c++){
+      if(dist(boom.get(a).getX(),boom.get(a).getY(),rocks.get(c).getX(),rocks.get(c).getY())<20){
+        rocks.remove(c);
+        boom.remove(a);
+        break;
+      }
+    }
+  }
 
   
   //keys stuff
@@ -105,7 +114,7 @@ public void keyPressed(){
     trek.setDirectionY(0);
   }
   if(key == 32){
-    boom.add(new Bullet(trek));//buller
+    boom.add(new Bullet(trek));//bullet
   }
 
 }
@@ -243,7 +252,27 @@ class Bullet extends Floater{
   public void show(){
     noStroke();
     fill(26, 255, 255);
-    ellipse((float)myCenterY,(float)myCenterY,15,15);
+    ellipse((float)myCenterX,(float)myCenterY,12,12);
+  }
+  public void move(){
+    myCenterX += myDirectionX;    
+    myCenterY += myDirectionY;
+    //dont loop
+    for(int i=0;i<boom.size();i++){
+    if(myCenterX>1000){
+      boom.remove(this);
+    }
+    if(myCenterY>1000){
+      boom.remove(this);
+    }
+    if(myCenterX<0){
+      boom.remove(this);
+    }
+    if(myCenterY<0){
+      boom.remove(this);
+    } 
+  }
+
   }
 }
 class Star{ 
